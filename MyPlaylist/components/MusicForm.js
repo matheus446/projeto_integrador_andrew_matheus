@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Alert,
   StyleSheet,
@@ -25,6 +25,20 @@ export default function MusicForm({
   const [arquivo, setArquivo] = useState(musicaInicial?.arquivo || "");
 
   const [seletorAberto, setSeletorAberto] = useState(false);
+
+  useEffect(() => {
+    if (musicaInicial) {
+      setTitulo(musicaInicial.titulo || "");
+      setArtista(musicaInicial.artista || "");
+      setGenero(musicaInicial.genero || "");
+      setArquivo(musicaInicial.arquivo || "");
+    } else {
+      setTitulo("");
+      setArtista("");
+      setGenero("");
+      setArquivo("");
+    }
+  }, [musicaInicial]);
 
   function validarFormulario() {
     if (!titulo.trim()) {
