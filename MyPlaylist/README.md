@@ -15,9 +15,9 @@ O aplicativo permitirá:
 - marcar/desmarcar como favorita;
 - escolher um arquivo `.mp3` entre os arquivos incluídos no próprio aplicativo;
 - manter os dados cadastrados entre sessões usando AsyncStorage;
-- reproduzir as músicas usando `expo-audio` na etapa final do projeto.
+- reproduzir as músicas usando `expo-audio`.
 
-> **Importante:** esta versão é um esqueleto funcional de arquitetura. O CRUD e a persistência já estão estruturados, e o modal do player está preparado. A reprodução real com `expo-audio` deve ser ligada depois que o cadastro, a lista e o armazenamento estiverem estáveis.
+> **Estado atual:** o CRUD, os favoritos, a persistência e o player com `expo-audio` estão implementados. O player possui play/pause, música anterior, próxima música, tempo e barra de progresso.
 
 ---
 
@@ -63,16 +63,16 @@ MyPlaylist/
 
 ### Responsabilidade de cada pasta
 
-| Pasta/arquivo | Responsabilidade |
-|---|---|
-| `App.js` | Ponto de entrada da aplicação. Não concentra regras do app. |
-| `navigation/` | Controle de navegação entre telas. |
-| `screens/` | Telas principais e estado relacionado ao fluxo da tela. |
-| `components/` | Componentes visuais reutilizáveis. |
-| `modals/` | Modais para ações temporárias sobre a tela principal. |
-| `services/` | Persistência e integração com recursos externos/bibliotecas. |
-| `data/` | Dados fixos necessários pelo aplicativo. |
-| `assets/musicas/` | Arquivos de áudio incluídos no projeto. |
+| Pasta/arquivo     | Responsabilidade                                             |
+| ----------------- | ------------------------------------------------------------ |
+| `App.js`          | Ponto de entrada da aplicação. Não concentra regras do app.  |
+| `navigation/`     | Controle de navegação entre telas.                           |
+| `screens/`        | Telas principais e estado relacionado ao fluxo da tela.      |
+| `components/`     | Componentes visuais reutilizáveis.                           |
+| `modals/`         | Modais para ações temporárias sobre a tela principal.        |
+| `services/`       | Persistência e integração com recursos externos/bibliotecas. |
+| `data/`           | Dados fixos necessários pelo aplicativo.                     |
+| `assets/musicas/` | Arquivos de áudio incluídos no projeto.                      |
 
 ---
 
@@ -177,7 +177,7 @@ export default musicFiles;
 Não tente fazer isto:
 
 ```js
-require(`../assets/musicas/${nomeArquivo}.mp3`)
+require(`../assets/musicas/${nomeArquivo}.mp3`);
 ```
 
 O React Native precisa conhecer os assets estáticos no bundle. Por isso cada arquivo deve ser registrado explicitamente no `musicFiles.js`.
@@ -273,8 +273,8 @@ Não avance para o player enquanto isso não estiver funcionando.
 O `HomeScreen` usa:
 
 ```js
-carregarMusicas()
-salvarMusicas()
+carregarMusicas();
+salvarMusicas();
 ```
 
 Teste fechando o aplicativo e abrindo novamente.
@@ -442,20 +442,20 @@ A música é removida do array pelo `id`, e a nova lista é salva no AsyncStorag
 
 # 🎯 Requisitos do Projeto Integrador
 
-| Requisito | Solução |
-|---|---|
-| Interface mobile | React Native + Expo |
-| Lista | `FlatList` |
-| Formulário | `MusicForm` dentro de modal |
-| Componentização | `MusicCard`, `MusicForm` e modais separados |
-| Criar | Cadastro de música |
-| Listar | Playlist principal |
-| Atualizar | Editar + favoritar |
-| Excluir | Menu da música |
-| Persistência real | AsyncStorage |
-| Justificativa da persistência | Pequeno volume e estrutura simples |
-| Recurso extra | Reprodução de áudio com `expo-audio` |
-| Navegação | React Navigation separado do `App.js` |
+| Requisito                     | Solução                                     |
+| ----------------------------- | ------------------------------------------- |
+| Interface mobile              | React Native + Expo                         |
+| Lista                         | `FlatList`                                  |
+| Formulário                    | `MusicForm` dentro de modal                 |
+| Componentização               | `MusicCard`, `MusicForm` e modais separados |
+| Criar                         | Cadastro de música                          |
+| Listar                        | Playlist principal                          |
+| Atualizar                     | Editar + favoritar                          |
+| Excluir                       | Menu da música                              |
+| Persistência real             | AsyncStorage                                |
+| Justificativa da persistência | Pequeno volume e estrutura simples          |
+| Recurso extra                 | Reprodução de áudio com `expo-audio`        |
+| Navegação                     | React Navigation separado do `App.js`       |
 
 ---
 
@@ -512,16 +512,16 @@ Os dois integrantes devem aparecer no histórico de commits.
 
 # 🧪 Checklist antes da entrega
 
-- [ ] O projeto abre sem erro.
-- [ ] A tela principal funciona.
-- [ ] É possível cadastrar uma música.
-- [ ] É possível listar as músicas.
-- [ ] É possível editar.
-- [ ] É possível excluir.
-- [ ] É possível favoritar/desfavoritar.
-- [ ] Os dados continuam após fechar e abrir o app.
-- [ ] Os arquivos MP3 escolhidos são os arquivos incluídos no projeto.
-- [ ] O player funciona.
+- [x] O projeto abre sem erro.
+- [x] A tela principal funciona.
+- [x] É possível cadastrar uma música.
+- [x] É possível listar as músicas.
+- [x] É possível editar.
+- [x] É possível excluir.
+- [x] É possível favoritar/desfavoritar.
+- [x] Os dados continuam após fechar e abrir o app.
+- [x] Os arquivos MP3 escolhidos são os arquivos incluídos no projeto.
+- [x] O player funciona.
 - [ ] Os dois integrantes possuem commits no GitHub.
 - [ ] Cada integrante sabe explicar as decisões do projeto.
 
@@ -544,4 +544,3 @@ Os dois integrantes devem aparecer no histórico de commits.
 - Expo Audio: https://docs.expo.dev/versions/latest/sdk/audio/
 - AsyncStorage no Expo: https://docs.expo.dev/versions/latest/sdk/async-storage/
 - React Navigation: https://reactnavigation.org/docs/getting-started/
-
