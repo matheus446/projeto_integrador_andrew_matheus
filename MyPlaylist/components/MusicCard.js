@@ -34,11 +34,25 @@ export default function MusicCard({
         </Text>
       </View>
 
-      <TouchableOpacity onPress={onEdit}>
-        <Text style={styles.menu}>
-          ⋮
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.acoes}>
+        <TouchableOpacity
+          onPress={onEdit}
+          style={styles.botaoAcao}
+        >
+          <Text style={styles.acao}>
+            ✏️
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={onDelete}
+          style={styles.botaoAcao}
+        >
+          <Text style={styles.acao}>
+            🗑️
+          </Text>
+        </TouchableOpacity>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -88,8 +102,17 @@ const styles = StyleSheet.create({
     color: "#888",
   },
 
-  menu: {
-    fontSize: 25,
-    padding: 10,
+  acoes: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  botaoAcao: {
+    padding: 5,
+    marginLeft: 4,
+  },
+
+  acao: {
+    fontSize: 20,
   },
 });
