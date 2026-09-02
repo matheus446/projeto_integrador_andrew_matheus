@@ -13,7 +13,7 @@ export default function AppNavigator() {
           name="Home"
           component={HomeScreen}
           options={{
-            title: "MyPlaylist",
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
