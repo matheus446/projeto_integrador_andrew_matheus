@@ -12,6 +12,7 @@ import {
   useAudioPlayer,
   useAudioPlayerStatus,
 } from "expo-audio";
+import { Ionicons } from "@expo/vector-icons";
 
 import { obterArquivoMusica } from "../services/audio";
 
@@ -166,7 +167,7 @@ export default function PlayerModal({
               accessibilityRole="button"
               accessibilityLabel="Música anterior"
             >
-              <Text style={styles.sideIcon}>⏮</Text>
+              <Ionicons name="play-skip-back" size={30} color="#3A3342" />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -176,7 +177,12 @@ export default function PlayerModal({
               accessibilityRole="button"
               accessibilityLabel={status.playing ? "Pausar" : "Reproduzir"}
             >
-              <Text style={styles.playIcon}>{status.playing ? "⏸" : "▶"}</Text>
+              <Ionicons
+                name={status.playing ? "pause" : "play"}
+                size={34}
+                color="#FFFFFF"
+                style={!status.playing ? styles.playIcon : undefined}
+              />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -189,7 +195,7 @@ export default function PlayerModal({
               accessibilityRole="button"
               accessibilityLabel="Próxima música"
             >
-              <Text style={styles.sideIcon}>⏭</Text>
+              <Ionicons name="play-skip-forward" size={30} color="#3A3342" />
             </TouchableOpacity>
           </View>
         </View>
@@ -316,11 +322,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
   },
 
-  sideIcon: {
-    fontSize: 30,
-    color: "#3A3342",
-  },
-
   playButton: {
     width: 70,
     height: 70,
@@ -331,8 +332,7 @@ const styles = StyleSheet.create({
   },
 
   playIcon: {
-    fontSize: 30,
-    color: "#FFFFFF",
+    marginLeft: 3,
   },
 
   disabled: {

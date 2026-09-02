@@ -10,6 +10,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.myplaylist.app"
-    }
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ]
   }
 }
