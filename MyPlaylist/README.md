@@ -461,52 +461,21 @@ A música é removida do array pelo `id`, e a nova lista é salva no AsyncStorag
 
 # 👥 Organização da dupla
 
-Uma divisão possível para evitar que apenas um integrante faça tudo:
-
-### Integrante 1
+### Matheus
 
 - `HomeScreen`
 - `MusicCard`
-- `AddMusicModal`
-- `EditMusicModal`
-
-### Integrante 2
-
 - `storage.js`
+- `AppNavigator`
+- `App`
+
+### Andrew
+
+- `musicFiles`
 - `FileSelectorModal`
-- `PlayerModal`
-- integração com `expo-audio`
-
-Depois, ambos revisam e testam o projeto inteiro.
-
-> **Importante para o GitHub:** cada integrante deve fazer commits próprios. Não adianta fazer todo o projeto em uma conta e depois apenas colocar o nome do outro no README.
-
----
-
-# 🌿 Sugestão de commits
-
-Evitem um único commit gigantesco como:
-
-```text
-Projeto final
-```
-
-Uma sequência melhor:
-
-```text
-feat: cria estrutura inicial do projeto
-feat: adiciona tela principal e MusicCard
-feat: cria modal de cadastro
-feat: implementa criação de músicas
-feat: implementa edição e exclusão
-feat: adiciona persistência com AsyncStorage
-feat: cria seletor de arquivos MP3
-feat: adiciona player de áudio
-fix: corrige comportamento do player
-style: ajusta layout da playlist
-```
-
-Os dois integrantes devem aparecer no histórico de commits.
+- `MusicForm`
+- `Modals`
+- `audio.js`
 
 ---
 
@@ -522,8 +491,8 @@ Os dois integrantes devem aparecer no histórico de commits.
 - [x] Os dados continuam após fechar e abrir o app.
 - [x] Os arquivos MP3 escolhidos são os arquivos incluídos no projeto.
 - [x] O player funciona.
-- [ ] Os dois integrantes possuem commits no GitHub.
-- [ ] Cada integrante sabe explicar as decisões do projeto.
+- [x] Os dois integrantes possuem commits no GitHub.
+- [] Cada integrante sabe explicar as decisões do projeto.
 
 ---
 
