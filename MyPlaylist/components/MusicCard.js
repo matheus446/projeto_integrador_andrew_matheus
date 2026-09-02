@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function MusicCard({ musica, onPress, onMenu }) {
+export default function MusicCard({ musica, onPress, onFavorite, onMenu }) {
   return (
     <View style={styles.card}>
       <TouchableOpacity
@@ -19,12 +19,6 @@ export default function MusicCard({ musica, onPress, onMenu }) {
             <Text style={styles.titulo} numberOfLines={1}>
               {musica.titulo}
             </Text>
-
-            {musica.favorita && (
-              <Text style={styles.favorita} accessibilityLabel="Favorita">
-                ♥
-              </Text>
-            )}
           </View>
 
           <Text style={styles.artista} numberOfLines={1}>
@@ -35,6 +29,21 @@ export default function MusicCard({ musica, onPress, onMenu }) {
             {musica.genero}
           </Text>
         </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={onFavorite}
+        style={styles.botaoFavorito}
+        hitSlop={8}
+        accessibilityRole="button"
+        accessibilityLabel={
+          musica.favorita ? "Desfavoritar música" : "Favoritar música"
+        }
+        accessibilityState={{ selected: Boolean(musica.favorita) }}
+      >
+        <Text style={[styles.coracao, musica.favorita && styles.coracaoAtivo]}>
+          {musica.favorita ? "♥" : "♡"}
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -101,10 +110,20 @@ const styles = StyleSheet.create({
     color: "#241F2E",
   },
 
-  favorita: {
-    marginLeft: 7,
+  botaoFavorito: {
+    minWidth: 40,
+    minHeight: 48,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  coracao: {
+    fontSize: 25,
+    color: "#675F70",
+  },
+
+  coracaoAtivo: {
     color: "#7B45D3",
-    fontSize: 16,
   },
 
   artista: {

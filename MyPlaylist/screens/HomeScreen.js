@@ -16,28 +16,21 @@ import AddMusicModal from "../modals/AddMusicModal";
 import EditMusicModal from "../modals/EditMusicModal";
 import PlayerModal from "../modals/PlayerModal";
 
-import {
-  carregarMusicas,
-  salvarMusicas,
-} from "../services/storage";
+import { carregarMusicas, salvarMusicas } from "../services/storage";
 
 export default function HomeScreen() {
   const [musicas, setMusicas] = useState([]);
 
-  const [modalAdicionarAberto, setModalAdicionarAberto] =
-    useState(false);
+  const [modalAdicionarAberto, setModalAdicionarAberto] = useState(false);
 
-  const [modalEditarAberto, setModalEditarAberto] =
-    useState(false);
+  const [modalEditarAberto, setModalEditarAberto] = useState(false);
 
-  const [modalPlayerAberto, setModalPlayerAberto] =
-    useState(false);
+  const [modalPlayerAberto, setModalPlayerAberto] = useState(false);
 
   const [reproduzirAutomaticamente, setReproduzirAutomaticamente] =
     useState(false);
 
-  const [musicaSelecionada, setMusicaSelecionada] =
-    useState(null);
+  const [musicaSelecionada, setMusicaSelecionada] = useState(null);
 
   useEffect(() => {
     carregar();
@@ -94,7 +87,7 @@ export default function HomeScreen() {
     };
 
     const novaLista = musicas.map((item) =>
-      item.id === musicaEditada.id ? musicaEditada : item
+      item.id === musicaEditada.id ? musicaEditada : item,
     );
 
     setMusicas(novaLista);
@@ -106,9 +99,7 @@ export default function HomeScreen() {
 
   async function alternarFavorita(id) {
     const novaLista = musicas.map((item) =>
-      item.id === id
-        ? { ...item, favorita: !item.favorita }
-        : item
+      item.id === id ? { ...item, favorita: !item.favorita } : item,
     );
 
     setMusicas(novaLista);
@@ -121,7 +112,7 @@ export default function HomeScreen() {
     }
 
     const indiceAtual = musicas.findIndex(
-      (item) => item.id === musicaSelecionada.id
+      (item) => item.id === musicaSelecionada.id,
     );
     const proximoIndice =
       (indiceAtual + direcao + musicas.length) % musicas.length;
@@ -143,9 +134,7 @@ export default function HomeScreen() {
           text: "Excluir",
           style: "destructive",
           onPress: async () => {
-            const novaLista = musicas.filter(
-              (item) => item.id !== id
-            );
+            const novaLista = musicas.filter((item) => item.id !== id);
 
             setMusicas(novaLista);
 
@@ -156,54 +145,40 @@ export default function HomeScreen() {
             }
           },
         },
-      ]
+      ],
     );
   }
 
   function abrirMenu(musica) {
-    Alert.alert(
-      musica.titulo,
-      "Escolha uma opção",
-      [
-        {
-          text: "Cancelar",
-          style: "cancel",
-        },
-        {
-          text: musica.favorita ? "Desfavoritar" : "Favoritar",
-          onPress: () => alternarFavorita(musica.id),
-        },
-        {
-          text: "Editar",
-          onPress: () => abrirEdicao(musica),
-        },
-        {
-          text: "Excluir",
-          style: "destructive",
-          onPress: () => excluirMusica(musica.id),
-        },
-      ]
-    );
+    Alert.alert(musica.titulo, "Escolha uma opção", [
+      {
+        text: "Cancelar",
+        style: "cancel",
+      },
+      {
+        text: "Editar",
+        onPress: () => abrirEdicao(musica),
+      },
+      {
+        text: "Excluir",
+        style: "destructive",
+        onPress: () => excluirMusica(musica.id),
+      },
+    ]);
   }
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-      <Text style={styles.titulo}>
-        MyPlaylist
-      </Text>
+      <Text style={styles.titulo}>MyPlaylist</Text>
 
       <View style={styles.cabecalho}>
-        <Text style={styles.subtitulo}>
-          Minhas músicas
-        </Text>
+        <Text style={styles.subtitulo}>Minhas músicas</Text>
 
         <TouchableOpacity
           style={styles.botaoAdicionar}
           onPress={() => setModalAdicionarAberto(true)}
         >
-          <Text style={styles.textoBotao}>
-            + Adicionar
-          </Text>
+          <Text style={styles.textoBotao}>+ Adicionar</Text>
         </TouchableOpacity>
       </View>
 
@@ -214,18 +189,15 @@ export default function HomeScreen() {
           <MusicCard
             musica={item}
             onPress={() => abrirPlayer(item)}
+            onFavorite={() => alternarFavorita(item.id)}
             onMenu={() => abrirMenu(item)}
           />
         )}
         contentContainerStyle={
-          musicas.length === 0
-            ? styles.listaVazia
-            : undefined
+          musicas.length === 0 ? styles.listaVazia : undefined
         }
         ListEmptyComponent={
-          <Text style={styles.vazio}>
-            Nenhuma música cadastrada.
-          </Text>
+          <Text style={styles.vazio}>Nenhuma música cadastrada.</Text>
         }
       />
 
