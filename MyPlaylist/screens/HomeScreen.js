@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useEffect, useState } from "react";
 
@@ -13,6 +14,7 @@ import MusicCard from "../components/MusicCard";
 
 import AddMusicModal from "../modals/AddMusicModal";
 import EditMusicModal from "../modals/EditMusicModal";
+import PlayerModal from "../modals/PlayerModal";
 
 import {
   carregarMusicas,
@@ -26,6 +28,12 @@ export default function HomeScreen() {
     useState(false);
 
   const [modalEditarAberto, setModalEditarAberto] =
+    useState(false);
+
+  const [modalPlayerAberto, setModalPlayerAberto] =
+    useState(false);
+
+  const [reproduzirAutomaticamente, setReproduzirAutomaticamente] =
     useState(false);
 
   const [musicaSelecionada, setMusicaSelecionada] =
@@ -44,6 +52,7 @@ export default function HomeScreen() {
   async function adicionarMusica(dados) {
     const novaMusica = {
       id: Date.now(),
+      favorita: false,
       ...dados,
     };
 
@@ -66,6 +75,18 @@ export default function HomeScreen() {
     setMusicaSelecionada(null);
   }
 
+  function abrirPlayer(musica) {
+    setMusicaSelecionada(musica);
+    setReproduzirAutomaticamente(false);
+    setModalPlayerAberto(true);
+  }
+
+  function fecharPlayer() {
+    setModalPlayerAberto(false);
+    setReproduzirAutomaticamente(false);
+    setMusicaSelecionada(null);
+  }
+
   async function editarMusica(dados) {
     const musicaEditada = {
       ...musicaSelecionada,
@@ -81,6 +102,32 @@ export default function HomeScreen() {
     await salvarMusicas(novaLista);
 
     fecharEdicao();
+  }
+
+  async function alternarFavorita(id) {
+    const novaLista = musicas.map((item) =>
+      item.id === id
+        ? { ...item, favorita: !item.favorita }
+        : item
+    );
+
+    setMusicas(novaLista);
+    await salvarMusicas(novaLista);
+  }
+
+  function trocarMusica(direcao, reproduzir = false) {
+    if (!musicaSelecionada || musicas.length === 0) {
+      return;
+    }
+
+    const indiceAtual = musicas.findIndex(
+      (item) => item.id === musicaSelecionada.id
+    );
+    const proximoIndice =
+      (indiceAtual + direcao + musicas.length) % musicas.length;
+
+    setReproduzirAutomaticamente(reproduzir);
+    setMusicaSelecionada(musicas[proximoIndice]);
   }
 
   function excluirMusica(id) {
@@ -103,6 +150,10 @@ export default function HomeScreen() {
             setMusicas(novaLista);
 
             await salvarMusicas(novaLista);
+
+            if (musicaSelecionada?.id === id) {
+              fecharPlayer();
+            }
           },
         },
       ]
@@ -119,6 +170,10 @@ export default function HomeScreen() {
           style: "cancel",
         },
         {
+          text: musica.favorita ? "Desfavoritar" : "Favoritar",
+          onPress: () => alternarFavorita(musica.id),
+        },
+        {
           text: "Editar",
           onPress: () => abrirEdicao(musica),
         },
@@ -132,7 +187,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <Text style={styles.titulo}>
         MyPlaylist
       </Text>
@@ -158,11 +213,8 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <MusicCard
             musica={item}
-            onPress={() =>
-              console.log("Tocou:", item.titulo)
-            }
-            onEdit={() => abrirMenu(item)}
-            onDelete={() => excluirMusica(item.id)}
+            onPress={() => abrirPlayer(item)}
+            onMenu={() => abrirMenu(item)}
           />
         )}
         contentContainerStyle={
@@ -177,13 +229,15 @@ export default function HomeScreen() {
         }
       />
 
-      <AddMusicModal
-        visible={modalAdicionarAberto}
-        onClose={() => setModalAdicionarAberto(false)}
-        onSubmit={adicionarMusica}
-      />
+      {modalAdicionarAberto && (
+        <AddMusicModal
+          visible={modalAdicionarAberto}
+          onClose={() => setModalAdicionarAberto(false)}
+          onSubmit={adicionarMusica}
+        />
+      )}
 
-      {musicaSelecionada && (
+      {musicaSelecionada && modalEditarAberto && (
         <EditMusicModal
           visible={modalEditarAberto}
           musica={musicaSelecionada}
@@ -191,7 +245,20 @@ export default function HomeScreen() {
           onSubmit={editarMusica}
         />
       )}
-    </View>
+
+      {musicaSelecionada && modalPlayerAberto && (
+        <PlayerModal
+          key={musicaSelecionada.id}
+          visible={modalPlayerAberto}
+          musica={musicaSelecionada}
+          onClose={fecharPlayer}
+          onPrevious={(reproduzir) => trocarMusica(-1, reproduzir)}
+          onNext={(reproduzir) => trocarMusica(1, reproduzir)}
+          temMaisDeUmaMusica={musicas.length > 1}
+          autoPlay={reproduzirAutomaticamente}
+        />
+      )}
+    </SafeAreaView>
   );
 }
 
@@ -241,6 +308,6 @@ const styles = StyleSheet.create({
   vazio: {
     textAlign: "center",
     marginTop: 30,
-    color: "#777",
+    color: "#675F70",
   },
 });

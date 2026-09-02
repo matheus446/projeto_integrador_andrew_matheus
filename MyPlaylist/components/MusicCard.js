@@ -1,59 +1,52 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function MusicCard({
-  musica,
-  onPress,
-  onEdit,
-  onDelete,
-}) {
+export default function MusicCard({ musica, onPress, onMenu }) {
   return (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={onPress}
-    >
-      <View style={styles.icone}>
-        <Text style={styles.nota}>♫</Text>
-      </View>
+    <View style={styles.card}>
+      <TouchableOpacity
+        style={styles.conteudo}
+        onPress={onPress}
+        activeOpacity={0.75}
+        accessibilityRole="button"
+        accessibilityLabel={`Reproduzir ${musica.titulo}`}
+      >
+        <View style={styles.icone}>
+          <Text style={styles.nota}>♫</Text>
+        </View>
 
-      <View style={styles.info}>
-        <Text style={styles.titulo}>
-          {musica.titulo}
-        </Text>
+        <View style={styles.info}>
+          <View style={styles.linhaTitulo}>
+            <Text style={styles.titulo} numberOfLines={1}>
+              {musica.titulo}
+            </Text>
 
-        <Text style={styles.artista}>
-          {musica.artista}
-        </Text>
+            {musica.favorita && (
+              <Text style={styles.favorita} accessibilityLabel="Favorita">
+                ♥
+              </Text>
+            )}
+          </View>
 
-        <Text style={styles.genero}>
-          {musica.genero}
-        </Text>
-      </View>
-
-      <View style={styles.acoes}>
-        <TouchableOpacity
-          onPress={onEdit}
-          style={styles.botaoAcao}
-        >
-          <Text style={styles.acao}>
-            ✏️
+          <Text style={styles.artista} numberOfLines={1}>
+            {musica.artista}
           </Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={onDelete}
-          style={styles.botaoAcao}
-        >
-          <Text style={styles.acao}>
-            🗑️
+          <Text style={styles.genero} numberOfLines={1}>
+            {musica.genero}
           </Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={onMenu}
+        style={styles.botaoMenu}
+        hitSlop={8}
+        accessibilityRole="button"
+        accessibilityLabel={`Opções de ${musica.titulo}`}
+      >
+        <Text style={styles.menu}>⋮</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -66,6 +59,16 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 12,
     elevation: 3,
+    shadowColor: "#241F2E",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
+
+  conteudo: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
   },
 
   icone: {
@@ -86,9 +89,22 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
 
+  linhaTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
   titulo: {
+    flexShrink: 1,
     fontSize: 17,
     fontWeight: "bold",
+    color: "#241F2E",
+  },
+
+  favorita: {
+    marginLeft: 7,
+    color: "#7B45D3",
+    fontSize: 16,
   },
 
   artista: {
@@ -99,20 +115,20 @@ const styles = StyleSheet.create({
   genero: {
     marginTop: 2,
     fontSize: 12,
-    color: "#888",
+    color: "#675F70",
   },
 
-  acoes: {
-    flexDirection: "row",
+  botaoMenu: {
+    minWidth: 40,
+    minHeight: 48,
+    justifyContent: "center",
     alignItems: "center",
-  },
-
-  botaoAcao: {
-    padding: 5,
     marginLeft: 4,
   },
 
-  acao: {
-    fontSize: 20,
+  menu: {
+    fontSize: 28,
+    lineHeight: 30,
+    color: "#4E4657",
   },
 });
