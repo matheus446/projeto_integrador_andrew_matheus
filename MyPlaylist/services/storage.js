@@ -4,10 +4,7 @@ const STORAGE_KEY = "@myplaylist:musicas";
 
 export async function salvarMusicas(musicas) {
   try {
-    await AsyncStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(musicas)
-    );
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(musicas));
   } catch (error) {
     console.log("Erro ao salvar músicas:", error);
   }
@@ -18,7 +15,9 @@ export async function carregarMusicas() {
     const dados = await AsyncStorage.getItem(STORAGE_KEY);
 
     if (dados) {
-      return JSON.parse(dados);
+      const musicas = JSON.parse(dados);
+
+      return Array.isArray(musicas) ? musicas : [];
     }
 
     return [];
