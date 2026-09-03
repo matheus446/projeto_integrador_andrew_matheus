@@ -172,7 +172,7 @@ export default function HomeScreen() {
       <Text style={styles.titulo}>MyPlaylist</Text>
 
       <View style={styles.cabecalho}>
-        <Text style={styles.subtitulo}>Minhas músicas</Text>
+        <Text style={styles.subtitulo}>Minhas músicas ({musicas.length})</Text>
 
         <TouchableOpacity
           style={styles.botaoAdicionar}
