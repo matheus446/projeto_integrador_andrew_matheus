@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import FileSelectorModal from "../modals/FileSelectorModal";
 
@@ -123,7 +124,7 @@ export default function MusicForm({
           {arquivo || "Selecionar arquivo"}
         </Text>
 
-        <Text style={styles.arrow}>▼</Text>
+        <Ionicons name="chevron-down" size={18} color="#625A6D" />
       </TouchableOpacity>
 
       <View style={styles.buttonsContainer}>

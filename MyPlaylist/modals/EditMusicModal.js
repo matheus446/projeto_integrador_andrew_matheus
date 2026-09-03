@@ -1,4 +1,5 @@
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import MusicForm from "../components/MusicForm";
 
@@ -16,7 +17,7 @@ export default function EditMusicModal({ visible, musica, onClose, onSubmit }) {
             <Text style={styles.title}>Editar música</Text>
 
             <TouchableOpacity onPress={onClose} hitSlop={10}>
-              <Text style={styles.close}>×</Text>
+              <Ionicons name="close" size={28} color="#4C4554" />
             </TouchableOpacity>
           </View>
 
@@ -59,11 +60,5 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     color: "#241F2E",
-  },
-
-  close: {
-    fontSize: 30,
-    lineHeight: 30,
-    color: "#4C4554",
   },
 });

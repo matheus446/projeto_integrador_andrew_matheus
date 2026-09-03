@@ -125,12 +125,12 @@ export default function PlayerModal({
             <Text style={styles.headerTitle}>Tocando agora</Text>
 
             <TouchableOpacity onPress={fecharPlayer} hitSlop={10}>
-              <Text style={styles.close}>×</Text>
+              <Ionicons name="close" size={28} color="#4C4554" />
             </TouchableOpacity>
           </View>
 
           <View style={styles.cover}>
-            <Text style={styles.note}>♫</Text>
+            <Ionicons name="musical-notes" size={64} color="#7B45D3" />
           </View>
 
           <Text style={styles.title} numberOfLines={2}>
@@ -232,12 +232,6 @@ const styles = StyleSheet.create({
     color: "#3A3342",
   },
 
-  close: {
-    fontSize: 30,
-    lineHeight: 30,
-    color: "#4C4554",
-  },
-
   cover: {
     width: 132,
     height: 132,
@@ -248,11 +242,6 @@ const styles = StyleSheet.create({
     marginTop: 18,
     marginBottom: 20,
     backgroundColor: "#E9DDFF",
-  },
-
-  note: {
-    fontSize: 66,
-    color: "#7B45D3",
   },
 
   title: {

@@ -1,4 +1,5 @@
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import musicFiles from "../data/musicFiles";
 
@@ -21,7 +22,7 @@ export default function FileSelectorModal({
             <Text style={styles.title}>Selecionar arquivo</Text>
 
             <TouchableOpacity onPress={onClose} hitSlop={10}>
-              <Text style={styles.close}>×</Text>
+              <Ionicons name="close" size={28} color="#4C4554" />
             </TouchableOpacity>
           </View>
 
@@ -36,7 +37,12 @@ export default function FileSelectorModal({
                 style={styles.option}
                 onPress={() => onSelect(item.nome)}
               >
-                <Text style={styles.note}>♫</Text>
+                <Ionicons
+                  name="musical-note"
+                  size={23}
+                  color="#7B45D3"
+                  style={{ width: 35 }}
+                />
 
                 <Text style={styles.fileName}>{item.nome}</Text>
 
@@ -88,23 +94,12 @@ const styles = StyleSheet.create({
     color: "#241F2E",
   },
 
-  close: {
-    fontSize: 30,
-    color: "#555",
-    lineHeight: 30,
-  },
-
   option: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: "#ECE8F0",
-  },
-
-  note: {
-    width: 35,
-    fontSize: 24,
   },
 
   fileName: {

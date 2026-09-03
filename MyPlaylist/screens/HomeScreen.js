@@ -7,8 +7,8 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 
 import MusicCard from "../components/MusicCard";
 
@@ -178,7 +178,13 @@ export default function HomeScreen() {
           style={styles.botaoAdicionar}
           onPress={() => setModalAdicionarAberto(true)}
         >
-          <Text style={styles.textoBotao}>+ Adicionar</Text>
+          <Ionicons
+            name="add"
+            size={20}
+            color="#FFFFFF"
+            style={{ marginRight: 3 }}
+          />
+          <Text style={styles.textoBotao}>Adicionar</Text>
         </TouchableOpacity>
       </View>
 
@@ -262,6 +268,8 @@ const styles = StyleSheet.create({
   },
 
   botaoAdicionar: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#7B45D3",
     paddingHorizontal: 14,
     paddingVertical: 10,

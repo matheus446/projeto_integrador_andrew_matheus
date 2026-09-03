@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function MusicCard({ musica, onPress, onFavorite, onMenu }) {
   return (
@@ -11,7 +12,7 @@ export default function MusicCard({ musica, onPress, onFavorite, onMenu }) {
         accessibilityLabel={`Reproduzir ${musica.titulo}`}
       >
         <View style={styles.icone}>
-          <Text style={styles.nota}>♫</Text>
+          <Ionicons name="musical-notes" size={25} color="#7B45D3" />
         </View>
 
         <View style={styles.info}>
@@ -41,9 +42,11 @@ export default function MusicCard({ musica, onPress, onFavorite, onMenu }) {
         }
         accessibilityState={{ selected: Boolean(musica.favorita) }}
       >
-        <Text style={[styles.coracao, musica.favorita && styles.coracaoAtivo]}>
-          {musica.favorita ? "♥" : "♡"}
-        </Text>
+        <Ionicons
+          name={musica.favorita ? "heart" : "heart-outline"}
+          size={25}
+          color={musica.favorita ? "#7B45D3" : "#675F70"}
+        />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -53,7 +56,7 @@ export default function MusicCard({ musica, onPress, onFavorite, onMenu }) {
         accessibilityRole="button"
         accessibilityLabel={`Opções de ${musica.titulo}`}
       >
-        <Text style={styles.menu}>⋮</Text>
+        <Ionicons name="ellipsis-vertical" size={25} color="#4E4657" />
       </TouchableOpacity>
     </View>
   );
@@ -63,15 +66,19 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#FFFFFF",
     borderRadius: 15,
     padding: 12,
     marginBottom: 12,
-    elevation: 3,
+
+    borderWidth: 1,
+    borderColor: "#EEE9F2",
+
+    elevation: 1,
     shadowColor: "#241F2E",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 3,
   },
 
   conteudo: {
@@ -84,13 +91,10 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 12,
-    backgroundColor: "#e9ddff",
+    backgroundColor: "#E9DDFF",
     justifyContent: "center",
     alignItems: "center",
-  },
-
-  nota: {
-    fontSize: 28,
+    overflow: "visible",
   },
 
   info: {
@@ -115,15 +119,6 @@ const styles = StyleSheet.create({
     minHeight: 48,
     justifyContent: "center",
     alignItems: "center",
-  },
-
-  coracao: {
-    fontSize: 25,
-    color: "#675F70",
-  },
-
-  coracaoAtivo: {
-    color: "#7B45D3",
   },
 
   artista: {
