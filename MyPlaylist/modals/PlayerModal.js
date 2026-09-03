@@ -13,6 +13,7 @@ import {
   useAudioPlayerStatus,
 } from "expo-audio";
 import { Ionicons } from "@expo/vector-icons";
+import Slider from "@react-native-community/slider";
 
 import { obterArquivoMusica } from "../services/audio";
 
@@ -141,9 +142,19 @@ export default function PlayerModal({
           </Text>
           <Text style={styles.genre}>{musica.genero}</Text>
 
-          <View style={styles.progressBackground}>
-            <View style={[styles.progress, { width: `${progresso * 100}%` }]} />
-          </View>
+          <Slider
+            style={styles.slider}
+            minimumValue={0}
+            maximumValue={status.duration || 1}
+            value={status.currentTime}
+            minimumTrackTintColor="#7B45D3"
+            maximumTrackTintColor="#E5DEEB"
+            thumbTintColor="#7B45D3"
+            disabled={!status.isLoaded}
+            onSlidingComplete={async (valor) => {
+              await player.seekTo(valor);
+            }}
+          />
 
           <View style={styles.times}>
             <Text style={styles.time}>{formatarTempo(status.currentTime)}</Text>
@@ -265,18 +276,10 @@ const styles = StyleSheet.create({
     color: "#675F70",
   },
 
-  progressBackground: {
-    height: 6,
-    marginTop: 28,
-    borderRadius: 3,
-    overflow: "hidden",
-    backgroundColor: "#E5DEEB",
-  },
-
-  progress: {
-    height: "100%",
-    borderRadius: 3,
-    backgroundColor: "#7B45D3",
+  slider: {
+    width: "100%",
+    height: 40,
+    marginTop: 18,
   },
 
   times: {
